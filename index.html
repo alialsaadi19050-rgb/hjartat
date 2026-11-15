@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hjärtat – القلب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#edf1f5; --surface:#ffffff; --surface-2:#f4f7fa; --ink:#18263a; --muted:#566476; --line:#d7dee7;
+  --accent:#1d3557; --accent-ink:#ffffff;
+  --blue-fill:#b6caef; --blue-edge:#36589c; --ves-blue:#5b84d4; --blue-tag:#dfe8fa; --blue-tag-ink:#1f4285;
+  --red-fill:#f4b2ac; --red-edge:#a52b23; --ves-red:#d64a40; --red-tag:#fbe2df; --red-tag-ink:#8a2019;
+  --muscle:#d98e82; --muscle-edge:#8f4338;
+  --valve:#fffaf0; --valve-edge:#5a4632;
+  --p-blue:#132f6e; --p-red:#6e0b11;
+  --glow:#f2a900; --marker-bg:#ffffff; --marker-ink:#18263a; --marker-edge:#18263a;
+  --label:#46546a; --gray-tag:#e8edf2; --gray-tag-ink:#3d4a5c;
+  --ok:#17905a; --bad:#cf3a2f;
+  --dur:1.15s;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111820; --surface:#18212b; --surface-2:#1f2a36; --ink:#e9eef4; --muted:#a2afbf; --line:#2c3a49;
+    --accent:#a9c8f5; --accent-ink:#0f1a28;
+    --blue-fill:#3c5890; --blue-edge:#9bb7ee; --ves-blue:#5276c2; --blue-tag:#203253; --blue-tag-ink:#bdd0f6;
+    --red-fill:#8c3c37; --red-edge:#f19b92; --ves-red:#c2463d; --red-tag:#47231f; --red-tag-ink:#f6c3bd;
+    --muscle:#985a50; --muscle-edge:#e2a397;
+    --valve:#f2ead9; --valve-edge:#2a2118;
+    --p-blue:#dbe7ff; --p-red:#ffdcd7;
+    --glow:#ffc93c; --marker-bg:#16202a; --marker-ink:#f1f4f8; --marker-edge:#dfe6ee;
+    --label:#b5c0cd; --gray-tag:#263240; --gray-tag-ink:#cfd8e3;
+    --ok:#3fcf8a; --bad:#ff7a6e;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111820; --surface:#18212b; --surface-2:#1f2a36; --ink:#e9eef4; --muted:#a2afbf; --line:#2c3a49;
+  --accent:#a9c8f5; --accent-ink:#0f1a28;
+  --blue-fill:#3c5890; --blue-edge:#9bb7ee; --ves-blue:#5276c2; --blue-tag:#203253; --blue-tag-ink:#bdd0f6;
+  --red-fill:#8c3c37; --red-edge:#f19b92; --ves-red:#c2463d; --red-tag:#47231f; --red-tag-ink:#f6c3bd;
+  --muscle:#985a50; --muscle-edge:#e2a397;
+  --valve:#f2ead9; --valve-edge:#2a2118;
+  --p-blue:#dbe7ff; --p-red:#ffdcd7;
+  --glow:#ffc93c; --marker-bg:#16202a; --marker-ink:#f1f4f8; --marker-edge:#dfe6ee;
+  --label:#b5c0cd; --gray-tag:#263240; --gray-tag-ink:#cfd8e3;
+  --ok:#3fcf8a; --bad:#ff7a6e;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.5}
+[lang="ar"]{font-family:"Noto Naskh Arabic","Geeza Pro","Traditional Arabic","Arial",sans-serif}
+.lang-sv .ar,.lang-ar .sv,.lang-sv .both-only,.lang-ar .both-only{display:none!important}
+
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 40px}
+header.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:12px;margin:8px 0 6px}
+.t-sv{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:700;letter-spacing:-.02em;line-height:1;margin:0}
+.t-ar{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:700;line-height:1.1;margin:0;text-align:right}
+.t-mid{width:clamp(44px,8vw,64px);height:auto;align-self:center}
+.lang-sv header.top,.lang-ar header.top{grid-template-columns:auto 1fr}
+.lang-ar .t-ar{text-align:left}
+.intro{display:grid;grid-template-columns:1fr 1fr;gap:16px;color:var(--muted);margin:6px 0 18px}
+.intro p{margin:0;max-width:60ch}
+.intro .ar{text-align:right;justify-self:end;font-size:1.08rem;line-height:1.8}
+.lang-sv .intro,.lang-ar .intro{grid-template-columns:1fr}
+.lang-ar .intro .ar{justify-self:stretch}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.seg{display:inline-flex;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
+.seg button,.btn{font:inherit;color:var(--ink);cursor:pointer}
+.seg button{border:0;background:transparent;border-radius:10px;padding:6px 12px;display:flex;flex-direction:column;align-items:center;line-height:1.2;min-height:44px;justify-content:center}
+.seg button .ar{font-size:.92rem}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg button:focus-visible,.btn:focus-visible,.word:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
+.spacer{flex:1}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:6px 14px;font-weight:700;display:inline-flex;flex-direction:column;align-items:center;line-height:1.2;min-height:44px;justify-content:center}
+.btn .ar{font-weight:600;font-size:.92rem}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:transparent}
+.btn:disabled{opacity:.4;cursor:default}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:1fr}.intro{grid-template-columns:1fr}.intro .ar{justify-self:stretch}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px}
+figure.card{margin:0}
+#heart{width:100%;height:auto;display:block;max-height:76vh;touch-action:manipulation}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 4px 0;font-size:.95rem}
+.legend span.k{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:14px;height:14px;border-radius:50%;display:inline-block;flex:none}
+.legend i.b{background:var(--ves-blue)} .legend i.r{background:var(--ves-red)}
+.note{margin:12px 4px 0;padding:10px 12px;border-radius:12px;background:var(--surface-2);font-size:.95rem;color:var(--muted);display:grid;gap:6px}
+.note .ar{text-align:right;font-size:1.02rem;line-height:1.8}
+
+/* SVG */
+.part{cursor:pointer;transition:opacity .35s}
+.part:hover{filter:brightness(1.07)}
+.part:focus{outline:none}
+.part:focus-visible{filter:drop-shadow(0 0 3px var(--accent)) drop-shadow(0 0 2px var(--accent))}
+.part.sel,.part.hl{filter:drop-shadow(0 0 5px var(--glow)) drop-shadow(0 0 2px var(--glow))}
+.part.ok{filter:drop-shadow(0 0 6px var(--ok)) drop-shadow(0 0 3px var(--ok))}
+.part.bad{filter:drop-shadow(0 0 6px var(--bad)) drop-shadow(0 0 3px var(--bad))}
+#heart.touring .part{opacity:.22}
+#heart.touring .part.hl{opacity:1}
+#heart.touring #particles{opacity:.35}
+#heart.quiz #markers{display:none}
+.ch{stroke-width:3;stroke-linejoin:round}
+.ch.blue{fill:var(--blue-fill);stroke:var(--blue-edge)}
+.ch.red{fill:var(--red-fill);stroke:var(--red-edge)}
+.muscle{fill:var(--muscle);stroke:var(--muscle-edge);stroke-width:3;stroke-linejoin:round}
+.sepr{fill:var(--muscle);stroke:none}
+.v-edge,.v-fill{fill:none;stroke-linecap:butt;stroke-linejoin:round}
+.v-edge.blue{stroke:var(--blue-edge)} .v-fill.blue{stroke:var(--ves-blue)}
+.v-edge.red{stroke:var(--red-edge)} .v-fill.red{stroke:var(--ves-red)}
+.flap{fill:var(--valve);stroke:var(--valve-edge);stroke-width:1.2}
+.hit{fill:transparent}
+#particles,#markers,#labels,#tour-layer{pointer-events:none}
+.particle.blue{fill:var(--p-blue)} .particle.red{fill:var(--p-red)}
+.marker circle{fill:var(--marker-bg);stroke:var(--marker-edge);stroke-width:1.5}
+.marker text{fill:var(--marker-ink);font-size:11px;font-weight:700;text-anchor:middle;font-family:"Atkinson Hyperlegible",system-ui,sans-serif}
+.lbl{font-size:11.5px;fill:var(--label);font-weight:700;font-family:"Atkinson Hyperlegible",system-ui,sans-serif}
+.lbl .arl{font-family:"Noto Naskh Arabic","Geeza Pro",Arial,sans-serif;font-size:12.5px;font-weight:600}
+#route{fill:none;stroke:var(--glow);stroke-width:3;stroke-dasharray:7 7;animation:dash 1s linear infinite}
+#tracer{stroke:#ffffff;stroke-width:2.5;filter:drop-shadow(0 0 6px var(--glow))}
+@keyframes dash{to{stroke-dashoffset:-14}}
+
+/* heartbeat */
+#ventricles{transform-box:fill-box;transform-origin:50% 30%;animation:ven var(--dur) infinite ease-in-out}
+.beat-a{transform-box:fill-box;transform-origin:50% 60%;animation:atr var(--dur) infinite ease-in-out}
+.av-l{transform-box:fill-box;transform-origin:0% 50%;animation:avL var(--dur) infinite linear}
+.av-r{transform-box:fill-box;transform-origin:100% 50%;animation:avR var(--dur) infinite linear}
+.sl-l{transform-box:fill-box;transform-origin:0% 50%;animation:slL var(--dur) infinite linear}
+.sl-r{transform-box:fill-box;transform-origin:100% 50%;animation:slR var(--dur) infinite linear}
+@keyframes atr{0%{transform:scale(1)}8%{transform:scale(.94)}18%,100%{transform:scale(1)}}
+@keyframes ven{0%,20%{transform:scale(1)}32%{transform:scale(.95)}48%{transform:scale(.955)}60%,100%{transform:scale(1)}}
+@keyframes avL{0%,16%{transform:rotate(62deg)}22%,54%{transform:rotate(0deg)}62%,100%{transform:rotate(62deg)}}
+@keyframes avR{0%,16%{transform:rotate(-62deg)}22%,54%{transform:rotate(0deg)}62%,100%{transform:rotate(-62deg)}}
+@keyframes slL{0%,22%{transform:rotate(0deg)}28%,50%{transform:rotate(-78deg)}56%,100%{transform:rotate(0deg)}}
+@keyframes slR{0%,22%{transform:rotate(0deg)}28%,50%{transform:rotate(78deg)}56%,100%{transform:rotate(0deg)}}
+.paused *,.paused *::before{animation-play-state:paused!important}
+
+/* panel */
+.panel{min-height:420px;display:flex;flex-direction:column;gap:12px}
+.panel h2{margin:0;font-size:1.55rem;line-height:1.2}
+.panel h2.ar{font-size:1.75rem;text-align:right;line-height:1.5}
+.panel p{margin:0}
+.panel .txt{font-size:1.06rem;line-height:1.6;max-width:62ch}
+.panel .txt.ar{font-size:1.22rem;line-height:1.95;text-align:right;max-width:none}
+.panel .muted{color:var(--muted)}
+.panel .muted.ar{text-align:right;font-size:1.1rem;line-height:1.8}
+.head{display:flex;gap:12px;align-items:flex-start}
+.head .names{flex:1;display:grid;gap:2px}
+.alt{color:var(--muted);font-size:.98rem}
+.alt.ar{text-align:right;font-size:1.05rem}
+.badge{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:1.15rem;background:var(--gray-tag);color:var(--gray-tag-ink);border:2px solid var(--line)}
+.badge.blue{background:var(--blue-tag);color:var(--blue-tag-ink);border-color:var(--ves-blue)}
+.badge.red{background:var(--red-tag);color:var(--red-tag-ink);border-color:var(--ves-red)}
+.tag{align-self:flex-start;display:inline-flex;flex-wrap:wrap;gap:4px 10px;padding:5px 12px;border-radius:999px;font-size:.93rem;font-weight:700;background:var(--gray-tag);color:var(--gray-tag-ink)}
+.tag.blue{background:var(--blue-tag);color:var(--blue-tag-ink)}
+.tag.red{background:var(--red-tag);color:var(--red-tag-ink)}
+.tag .ar{font-weight:600}
+.texts{display:grid;gap:12px;padding-top:4px}
+.lang-both .texts .ar{border-top:1px dashed var(--line);padding-top:12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:auto;padding-top:6px}
+.row .count{flex:1;text-align:center;color:var(--muted);font-weight:700}
+.empty{display:grid;gap:10px;place-content:center;flex:1;text-align:center}
+.empty .ar{text-align:center}
+.big-ico{font-size:2.4rem}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps button{width:34px;height:34px;border-radius:50%;border:2px solid var(--line);background:var(--surface-2);color:var(--ink);font:inherit;font-weight:700;cursor:pointer}
+.steps button[aria-current="step"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.quiz-term{font-size:2rem;font-weight:700;padding:14px;border-radius:14px;background:var(--surface-2);text-align:center;line-height:1.4}
+.quiz-term[lang="ar"]{font-size:2.3rem}
+.fb{padding:10px 12px;border-radius:12px;display:grid;gap:4px}
+.fb.ok{background:color-mix(in srgb,var(--ok) 16%,transparent)}
+.fb.bad{background:color-mix(in srgb,var(--bad) 16%,transparent)}
+.fb .ar{text-align:right;font-size:1.12rem;line-height:1.8}
+.score{font-weight:700;display:grid;gap:2px}
+.score .ar{text-align:right}
+
+/* word list */
+.words-card{margin-top:16px}
+.words-card h2{margin:0 0 12px;font-size:1.35rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+.words-card h2 .ar{font-size:1.45rem}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px}
+.word{display:flex;align-items:center;gap:10px;text-align:left;font:inherit;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:8px 10px;cursor:pointer;min-height:52px}
+.word .badge{width:32px;height:32px;font-size:.95rem}
+.word .w{flex:1;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+.word .w .sv{font-weight:700}
+.word .w .ar{font-size:1.1rem;margin-left:auto}
+.word[aria-current="true"]{border-color:var(--glow);box-shadow:0 0 0 2px var(--glow)}
+footer{margin-top:18px;color:var(--muted);font-size:.9rem;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px}
+@media (prefers-reduced-motion: reduce){.part{transition:none}}
+</style>
+</head>
+<body class="lang-both">
+<div class="wrap">
+  <header class="top">
+    <h1 class="t-sv sv" lang="sv">Hjärtat</h1>
+    <svg class="t-mid both-only" viewBox="0 0 64 56" aria-hidden="true"><path d="M32 52 C10 38 2 26 2 16 A14 14 0 0 1 32 10 A14 14 0 0 1 62 16 C62 26 54 38 32 52Z" fill="var(--ves-red)"/><path d="M8 26 H22 L26 18 L32 36 L37 24 H56" fill="none" stroke="var(--surface)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <h1 class="t-ar ar" lang="ar" dir="rtl">القلب</h1>
+  </header>
+  <div class="intro">
+    <p class="sv" lang="sv">Klicka på hjärtats delar, följ blodets väg steg för steg eller testa dig själv i quizet. Alla förklaringar finns på svenska och arabiska.</p>
+    <p class="ar" lang="ar" dir="rtl">اضغط على أجزاء القلب، أو تابع رحلة الدم خطوة بخطوة، أو اختبر نفسك في الاختبار. كل الشروحات موجودة باللغتين السويدية والعربية.</p>
+  </div>
+
+  <div class="toolbar">
+    <div class="seg" id="modes" role="group" aria-label="Läge">
+      <button data-mode="explore" aria-pressed="true"><span class="sv">Utforska</span><span class="ar" lang="ar">استكشف</span></button>
+      <button data-mode="tour" aria-pressed="false"><span class="sv">Blodets väg</span><span class="ar" lang="ar">رحلة الدم</span></button>
+      <button data-mode="quiz" aria-pressed="false"><span class="sv">Quiz</span><span class="ar" lang="ar">اختبار</span></button>
+    </div>
+    <div class="seg" id="langs" role="group" aria-label="Språk">
+      <button data-lang="both" aria-pressed="true"><span>Båda</span><span lang="ar">كلاهما</span></button>
+      <button data-lang="sv" aria-pressed="false"><span>Svenska</span></button>
+      <button data-lang="ar" aria-pressed="false"><span lang="ar">العربية</span></button>
+    </div>
+    <span class="spacer"></span>
+    <button class="btn" id="playBtn"></button>
+  </div>
+
+  <main class="grid">
+    <figure class="card">
+      <svg id="heart" viewBox="-45 -15 580 528" role="img" aria-label="Schematisk bild av hjärtat med numrerade delar">
+        <g id="ventricles">
+          <path class="part muscle" data-part="mus" d="M60,250 L402,250 L402,330 Q396,425 296,468 Q238,452 205,432 Q160,440 112,418 Q62,392 60,320 Z"/>
+          <path class="part ch blue" data-part="rv" d="M75,258 L220,258 L220,395 Q195,425 150,410 Q85,385 75,320 Z"/>
+          <path class="part ch red" data-part="lv" d="M240,258 L378,258 L378,330 Q372,400 298,440 Q255,425 240,395 Z"/>
+          <rect class="part sepr" data-part="sep" x="220" y="257" width="20" height="146" rx="6"/>
+        </g>
+        <g class="part beat-a" data-part="ra"><path class="ch blue" d="M70,250 L70,168 Q70,140 98,140 L150,140 Q178,140 178,168 L178,250 Z"/></g>
+        <g class="part beat-a" data-part="la"><path class="ch red" d="M282,250 L282,166 Q282,140 308,140 L366,140 Q392,140 392,166 L392,250 Z"/></g>
+
+        <g class="part" data-part="ivc">
+          <path class="v-edge blue" stroke-width="35" d="M40,482 L40,218 Q40,200 58,200 L82,200"/>
+          <path class="v-fill blue" stroke-width="29" d="M40,482 L40,218 Q40,200 58,200 L82,200"/>
+        </g>
+        <g class="part" data-part="pv">
+          <path class="v-edge red" stroke-width="25" d="M492,195 L386,195 M492,232 L386,232"/>
+          <path class="v-fill red" stroke-width="19" d="M492,195 L386,195 M492,232 L386,232"/>
+        </g>
+        <g class="part" data-part="pa">
+          <path class="v-edge blue" stroke-width="36" d="M203,280 L203,112 M-12,112 L492,112"/>
+          <path class="v-fill blue" stroke-width="30" d="M203,280 L203,112 M-12,112 L492,112"/>
+        </g>
+        <g class="part" data-part="svc">
+          <path class="v-edge blue" stroke-width="36" d="M130,-4 L130,152"/>
+          <path class="v-fill blue" stroke-width="30" d="M130,-4 L130,152"/>
+        </g>
+        <g class="part" data-part="ao">
+          <path class="v-edge red" stroke-width="15" d="M292,47 L292,6 M322,47 L322,6 M352,47 L352,6"/>
+          <path class="v-fill red" stroke-width="10" d="M292,47 L292,6 M322,47 L322,6 M352,47 L352,6"/>
+          <path class="v-edge red" stroke-width="38" d="M252,282 L252,90 Q252,45 297,45 L365,45 Q410,45 410,90 L410,170"/>
+          <path class="v-fill red" stroke-width="32" d="M252,282 L252,90 Q252,45 297,45 L365,45 Q410,45 410,90 L410,170"/>
+        </g>
+
+        <g class="part" data-part="tv">
+          <rect class="hit" x="86" y="241" width="76" height="24"/>
+          <rect class="flap av-l" x="92" y="251" width="32" height="4" rx="2"/>
+          <rect class="flap av-r" x="124" y="251" width="32" height="4" rx="2"/>
+        </g>
+        <g class="part" data-part="mv">
+          <rect class="hit" x="299" y="241" width="76" height="24"/>
+          <rect class="flap av-l" x="305" y="251" width="32" height="4" rx="2"/>
+          <rect class="flap av-r" x="337" y="251" width="32" height="4" rx="2"/>
+        </g>
+        <g class="part" data-part="pvv">
+          <rect class="hit" x="186" y="256" width="34" height="20"/>
+          <rect class="flap sl-l" x="190" y="264" width="13" height="3.2" rx="1.6"/>
+          <rect class="flap sl-r" x="203" y="264" width="13" height="3.2" rx="1.6"/>
+        </g>
+        <g class="part" data-part="aov">
+          <rect class="hit" x="234" y="256" width="36" height="20"/>
+          <rect class="flap sl-l" x="238" y="264" width="14" height="3.2" rx="1.6"/>
+          <rect class="flap sl-r" x="252" y="264" width="14" height="3.2" rx="1.6"/>
+        </g>
+
+        <g id="flowPaths" fill="none" stroke="none"></g>
+        <g id="particles"></g>
+        <g id="tour-layer" style="display:none">
+          <path id="route" d=""/>
+          <circle id="tracer" r="9" cx="0" cy="0"/>
+        </g>
+        <g id="markers"></g>
+        <g id="labels"></g>
+      </svg>
+      <div class="legend">
+        <span class="k"><i class="b"></i><span class="sv">Syrefattigt blod</span><span class="ar" lang="ar">دم فقير بالأكسجين</span></span>
+        <span class="k"><i class="r"></i><span class="sv">Syrerikt blod</span><span class="ar" lang="ar">دم غني بالأكسجين</span></span>
+      </div>
+      <figcaption class="note">
+        <span class="sv">Obs! Bilden visar hjärtat som om du tittar på en person framifrån. Därför ligger hjärtats högra sida till vänster i bilden.</span>
+        <span class="ar" lang="ar" dir="rtl">انتبه! تُظهر الصورة القلب كأنك تنظر إلى شخص يقف أمامك. لذلك يقع الجانب الأيمن من القلب على يسار الصورة.</span>
+      </figcaption>
+    </figure>
+
+    <section class="card panel" id="panel" aria-live="polite"></section>
+  </main>
+
+  <section class="card words-card">
+    <h2><span class="sv">Ordlista</span><span class="ar" lang="ar" dir="rtl">قائمة الكلمات</span></h2>
+    <div class="words" id="words"></div>
+  </section>
+
+  <footer>
+    <span class="sv">Förenklad skolbild – inte en exakt anatomisk ritning.</span>
+    <span class="ar" lang="ar" dir="rtl">صورة مبسطة للمدرسة – ليست رسماً تشريحياً دقيقاً.</span>
+  </footer>
+</div>
+
+<script>
+const PARTS = [
+  {id:'ra', n:1, blood:'blue', m:[124,190], sv:'Höger förmak', ar:'الأذين الأيمن',
+   svT:'Hit kommer syrefattigt blod från kroppen genom hålvenerna. Förmaket är som en ”väntsal” som samlar blodet och sedan pumpar det vidare ner till höger kammare.',
+   arT:'يصل إلى هنا الدم الفقير بالأكسجين من الجسم عبر الوريدين الأجوفين. الأذين يشبه «غرفة انتظار» تجمع الدم ثم تضخه إلى البطين الأيمن.'},
+  {id:'rv', n:2, blood:'blue', m:[140,330], sv:'Höger kammare', ar:'البطين الأيمن',
+   svT:'Pumpar det syrefattiga blodet ut i lungartären och vidare till lungorna. Där lämnar blodet koldioxid och tar upp syre. Väggen är tunnare än i vänster kammare, eftersom lungorna ligger nära hjärtat.',
+   arT:'يضخ الدم الفقير بالأكسجين إلى الشريان الرئوي ثم إلى الرئتين. هناك يتخلص الدم من ثاني أكسيد الكربون ويأخذ الأكسجين. جداره أرق من جدار البطين الأيسر لأن الرئتين قريبتان من القلب.'},
+  {id:'la', n:3, blood:'red', m:[337,185], sv:'Vänster förmak', ar:'الأذين الأيسر',
+   svT:'Tar emot syrerikt blod från lungorna genom lungvenerna. Sedan pumpar det blodet ner till vänster kammare.',
+   arT:'يستقبل الدم الغني بالأكسجين القادم من الرئتين عبر الأوردة الرئوية، ثم يضخه إلى البطين الأيسر.'},
+  {id:'lv', n:4, blood:'red', m:[305,340], sv:'Vänster kammare', ar:'البطين الأيسر',
+   svT:'Hjärtats starkaste del. Den pumpar ut det syrerika blodet i aortan till hela kroppen, från huvudet ända ner till tårna. Därför har den den tjockaste muskelväggen.',
+   arT:'أقوى جزء في القلب. يضخ الدم الغني بالأكسجين إلى الشريان الأبهر ومنه إلى الجسم كله، من الرأس حتى أصابع القدمين. لذلك جداره العضلي هو الأسمك.'},
+  {id:'svc', n:5, blood:'blue', m:[130,55], sv:'Övre hålvenen', ar:'الوريد الأجوف العلوي',
+   svT:'En stor ven som för syrefattigt blod från huvudet och armarna tillbaka till höger förmak.',
+   arT:'وريد كبير ينقل الدم الفقير بالأكسجين من الرأس والذراعين إلى الأذين الأيمن.'},
+  {id:'ivc', n:6, blood:'blue', m:[40,400], sv:'Nedre hålvenen', ar:'الوريد الأجوف السفلي',
+   svT:'En stor ven som för syrefattigt blod från magen, bålen och benen tillbaka till höger förmak.',
+   arT:'وريد كبير ينقل الدم الفقير بالأكسجين من البطن والجذع والساقين إلى الأذين الأيمن.'},
+  {id:'pa', n:7, blood:'blue', m:[203,190], sv:'Lungartären', ar:'الشريان الرئوي', svAlt:'(lungpulsådern)', arAlt:'',
+   svT:'För syrefattigt blod från höger kammare till lungorna. Den kallas artär (pulsåder) eftersom den leder blod bort från hjärtat – trots att blodet är syrefattigt!',
+   arT:'ينقل الدم الفقير بالأكسجين من البطين الأيمن إلى الرئتين. يُسمى شرياناً لأنه يحمل الدم بعيداً عن القلب، رغم أن الدم فيه فقير بالأكسجين!'},
+  {id:'ao', n:8, blood:'red', m:[252,190], sv:'Aorta', ar:'الشريان الأبهر', svAlt:'(stora kroppspulsådern)', arAlt:'(الشريان الأورطي)',
+   svT:'Kroppens största artär. Den för syrerikt blod från vänster kammare ut till hela kroppen. Den är ungefär lika tjock som en tumme.',
+   arT:'أكبر شريان في الجسم. ينقل الدم الغني بالأكسجين من البطين الأيسر إلى الجسم كله. سُمكه تقريباً مثل سُمك الإبهام.'},
+  {id:'pv', n:9, blood:'red', m:[450,195], sv:'Lungvenerna', ar:'الأوردة الرئوية',
+   svT:'För syrerikt blod från lungorna tillbaka till vänster förmak. De kallas vener eftersom de leder blod till hjärtat.',
+   arT:'تنقل الدم الغني بالأكسجين من الرئتين إلى الأذين الأيسر. تُسمى أوردة لأنها تحمل الدم إلى القلب.'},
+  {id:'tv', n:10, blood:'valve', m:[124,274], sv:'Trikuspidalklaffen', ar:'الصمام ثلاثي الشرفات', svAlt:'(höger segelklaff)', arAlt:'',
+   svT:'En klaff mellan höger förmak och höger kammare. Den fungerar som en envägsdörr, så att blodet inte rinner tillbaka upp i förmaket när kammaren pumpar.',
+   arT:'صمام بين الأذين الأيمن والبطين الأيمن. يعمل مثل باب يُفتح في اتجاه واحد، حتى لا يرجع الدم إلى الأذين عندما ينقبض البطين.'},
+  {id:'mv', n:11, blood:'valve', m:[337,274], sv:'Mitralisklaffen', ar:'الصمام التاجي', svAlt:'(vänster segelklaff)', arAlt:'(الصمام ثنائي الشرفات)',
+   svT:'Klaffen mellan vänster förmak och vänster kammare. Den stängs när kammaren pumpar, så att blodet åker ut i aortan i stället för tillbaka.',
+   arT:'الصمام بين الأذين الأيسر والبطين الأيسر. ينغلق عندما ينقبض البطين، حتى يذهب الدم إلى الشريان الأبهر بدلاً من الرجوع.'},
+  {id:'pvv', n:12, blood:'valve', m:[203,294], sv:'Pulmonalisklaffen', ar:'الصمام الرئوي', svAlt:'(en fickklaff)', arAlt:'(صمام هلالي)',
+   svT:'Sitter i början av lungartären. Den hindrar blodet från att rinna tillbaka in i höger kammare.',
+   arT:'يوجد في بداية الشريان الرئوي. يمنع الدم من الرجوع إلى البطين الأيمن.'},
+  {id:'aov', n:13, blood:'valve', m:[252,294], sv:'Aortaklaffen', ar:'الصمام الأبهري', svAlt:'(en fickklaff)', arAlt:'(صمام هلالي)',
+   svT:'Sitter i början av aortan. Den hindrar blodet från att rinna tillbaka in i vänster kammare. När klaffarna stängs hörs ljudet ”dunk-dunk” om du lyssnar på hjärtat.',
+   arT:'يوجد في بداية الشريان الأبهر. يمنع الدم من الرجوع إلى البطين الأيسر. عندما تنغلق الصمامات نسمع صوت «دُم-دُم» إذا استمعنا إلى القلب.'},
+  {id:'sep', n:14, blood:'none', m:[230,365], sv:'Skiljeväggen', ar:'الحاجز القلبي', svAlt:'(septum)', arAlt:'',
+   svT:'En vägg av muskel som delar hjärtat i en höger och en vänster halva. Den gör att syrefattigt och syrerikt blod inte blandas.',
+   arT:'جدار عضلي يقسم القلب إلى نصف أيمن ونصف أيسر. يمنع اختلاط الدم الفقير بالأكسجين بالدم الغني بالأكسجين.'},
+  {id:'mus', n:15, blood:'none', m:[390,300], sv:'Hjärtmuskeln', ar:'عضلة القلب',
+   svT:'Hjärtat är en muskel som drar ihop sig ungefär 60–80 gånger i minuten när du vilar – hela livet, utan paus. Hjärtmuskeln får sitt eget blod från kranskärlen.',
+   arT:'القلب عضلة تنقبض تقريباً 60–80 مرة في الدقيقة أثناء الراحة، طوال الحياة دون توقف. تحصل عضلة القلب على الدم من الشرايين التاجية.'}
+];
+
+const LOOPS = {
+  big:['Stora kretsloppet','الدورة الدموية الكبرى'],
+  small:['Lilla kretsloppet (lungkretsloppet)','الدورة الدموية الصغرى (الرئوية)'],
+  heart:['Inne i hjärtat','داخل القلب']
+};
+const BLUE='#2f6fe0', RED='#e0322f';
+const AORTA_D='M305,340 Q258,322 252,270 L252,90 Q252,45 297,45 L365,45 Q410,45 410,90 L410,170';
+const STEPS = [
+  {loop:'big', hl:['svc','ivc','ra'], d:'M130,0 L130,190', c:[BLUE,BLUE],
+   sv:'Blodet kommer tillbaka från kroppen', ar:'يعود الدم من الجسم',
+   svT:'Syrefattigt blod från kroppen kommer till hjärtat genom övre och nedre hålvenen. Blodet rinner in i höger förmak.',
+   arT:'يعود الدم الفقير بالأكسجين من الجسم إلى القلب عبر الوريد الأجوف العلوي والوريد الأجوف السفلي، ويدخل إلى الأذين الأيمن.'},
+  {loop:'heart', hl:['ra','tv','rv'], d:'M124,190 L124,253 L140,330', c:[BLUE,BLUE],
+   sv:'Från förmak till kammare', ar:'من الأذين إلى البطين',
+   svT:'Höger förmak drar ihop sig och pressar blodet genom trikuspidalklaffen ner i höger kammare. Klaffen stängs efteråt så att blodet inte kan rinna tillbaka.',
+   arT:'ينقبض الأذين الأيمن ويدفع الدم عبر الصمام ثلاثي الشرفات إلى البطين الأيمن. بعد ذلك ينغلق الصمام حتى لا يرجع الدم.'},
+  {loop:'small', hl:['rv','pvv','pa'], d:'M140,330 Q190,322 203,270 L203,112 L492,112', c:[BLUE,BLUE],
+   sv:'Iväg till lungorna', ar:'الذهاب إلى الرئتين',
+   svT:'Höger kammare drar ihop sig. Blodet pressas genom pulmonalisklaffen ut i lungartären, som delar sig och går till båda lungorna.',
+   arT:'ينقبض البطين الأيمن، فيندفع الدم عبر الصمام الرئوي إلى الشريان الرئوي الذي يتفرع ويذهب إلى الرئتين كلتيهما.'},
+  {loop:'small', hl:['pa','pv'], d:'M492,112 C540,132 540,182 492,195', c:[BLUE,RED],
+   sv:'I lungorna byts gaserna', ar:'تبادل الغازات في الرئتين',
+   svT:'I lungornas små lungblåsor lämnar blodet koldioxid, som du andas ut. Samtidigt tar blodet upp syre från luften du andas in. Nu är blodet syrerikt!',
+   arT:'في الحويصلات الهوائية الصغيرة داخل الرئتين يتخلص الدم من ثاني أكسيد الكربون الذي نُخرجه مع الزفير. وفي الوقت نفسه يأخذ الدم الأكسجين من الهواء الذي نتنفسه. الآن أصبح الدم غنياً بالأكسجين!'},
+  {loop:'small', hl:['pv','la'], d:'M492,195 L337,195', c:[RED,RED],
+   sv:'Tillbaka till hjärtat', ar:'العودة إلى القلب',
+   svT:'Det syrerika blodet rinner från lungorna genom lungvenerna in i vänster förmak.',
+   arT:'يتدفق الدم الغني بالأكسجين من الرئتين عبر الأوردة الرئوية إلى الأذين الأيسر.'},
+  {loop:'heart', hl:['la','mv','lv'], d:'M337,195 L337,253 L305,340', c:[RED,RED],
+   sv:'Ner till vänster kammare', ar:'النزول إلى البطين الأيسر',
+   svT:'Vänster förmak drar ihop sig och pressar blodet genom mitralisklaffen ner i vänster kammare.',
+   arT:'ينقبض الأذين الأيسر ويدفع الدم عبر الصمام التاجي إلى البطين الأيسر.'},
+  {loop:'big', hl:['lv','aov','ao'], d:AORTA_D, c:[RED,RED],
+   sv:'Ut i kroppen', ar:'الخروج إلى الجسم',
+   svT:'Vänster kammare, hjärtats starkaste del, drar ihop sig. Blodet pressas genom aortaklaffen ut i aortan och vidare till hela kroppen.',
+   arT:'ينقبض البطين الأيسر، وهو أقوى جزء في القلب، فيندفع الدم عبر الصمام الأبهري إلى الشريان الأبهر ومنه إلى الجسم كله.'},
+  {loop:'big', hl:['ao','ivc','svc'], d:'M410,170 C540,260 520,505 300,505 L40,505 L40,470', c:[RED,BLUE],
+   sv:'Kroppen använder syret', ar:'الجسم يستخدم الأكسجين',
+   svT:'I kroppens minsta blodkärl, kapillärerna, lämnar blodet syre och näring till cellerna och tar med sig koldioxid. Blodet blir syrefattigt och åker tillbaka till hjärtat. Sedan börjar allt om igen!',
+   arT:'في أصغر الأوعية الدموية، وهي الشعيرات الدموية، يعطي الدم الأكسجين والغذاء للخلايا ويأخذ ثاني أكسيد الكربون. يصبح الدم فقيراً بالأكسجين ويعود إلى القلب. ثم يبدأ كل شيء من جديد!'}
+];
+
+const LABELS = [
+  {x:108,y:20,a:'end',sv:'från huvud och armar',ar:'من الرأس والذراعين'},
+  {x:62,y:478,a:'start',sv:'från mage och ben',ar:'من البطن والساقين'},
+  {x:-40,y:76,a:'start',sv:'till höger lunga',ar:'إلى الرئة اليمنى'},
+  {x:530,y:150,a:'end',sv:'till vänster lunga',ar:'إلى الرئة اليسرى'},
+  {x:530,y:262,a:'end',sv:'från lungorna',ar:'من الرئتين'},
+  {x:436,y:20,a:'start',sv:'till kroppen',ar:'إلى الجسم'}
+];
+const FLOWS = [
+  {c:'blue', d:'M130,0 L130,195 L124,253 L140,330 Q190,322 203,270 L203,112 L-12,112'},
+  {c:'blue', d:'M40,482 L40,218 Q40,200 58,200 L120,200 L124,253 L140,330 Q190,322 203,270 L203,112 L492,112'},
+  {c:'red',  d:'M492,195 L337,195 L337,253 L305,340 Q258,322 252,270 L252,90 Q252,45 297,45 L365,45 Q410,45 410,90 L410,170'},
+  {c:'red',  d:'M492,232 L350,232 L337,253 L305,340 Q258,322 252,270 L252,90 Q252,45 297,45 L365,45 Q410,45 410,90 L410,170'}
+];
+const TAGS = {blue:['Syrefattigt blod','دم فقير بالأكسجين'], red:['Syrerikt blod','دم غني بالأكسجين'], valve:['Klaff','صمام'], none:['Muskel','عضلة']};
+
+const NS='http://www.w3.org/2000/svg';
+const $=s=>document.querySelector(s);
+const svg=$('#heart'), panel=$('#panel');
+const byId=Object.fromEntries(PARTS.map(p=>[p.id,p]));
+const DUR=1.15;
+const state={mode:'explore', lang:'both', sel:null, step:0, auto:false, paused:false,
+  quiz:null, qLang:'sv', score:0, asked:0, qWrong:false, feedback:null, locked:false};
+let autoTimer=null;
+
+function bi(sv, ar, tag='p', cls=''){
+  let h='';
+  if(sv) h+=`<${tag} class="sv ${cls}" lang="sv">${sv}</${tag}>`;
+  if(ar) h+=`<${tag} class="ar ${cls}" lang="ar" dir="rtl">${ar}</${tag}>`;
+  return h;
+}
+function btnLabel(sv, ar, pre='', post=''){
+  return `<span class="sv">${pre}${sv}${post}</span><span class="ar" lang="ar">${ar}</span>`;
+}
+function tagHTML(kind, cls){
+  const t = kind in TAGS ? TAGS[kind] : kind;
+  return `<span class="tag ${cls||kind}"><span class="sv">${t[0]}</span><span class="ar" lang="ar" dir="rtl">${t[1]}</span></span>`;
+}
+
+/* ---------- SVG setup ---------- */
+document.querySelectorAll('[data-part]').forEach(el=>{
+  const p=byId[el.dataset.part];
+  el.setAttribute('tabindex','0');
+  el.setAttribute('role','button');
+  el.setAttribute('aria-label',`${p.n}. ${p.sv} – ${p.ar}`);
+});
+const mk=$('#markers');
+PARTS.forEach(p=>{
+  const g=document.createElementNS(NS,'g');
+  g.setAttribute('class','marker');
+  g.innerHTML=`<circle cx="${p.m[0]}" cy="${p.m[1]}" r="10"/><text x="${p.m[0]}" y="${p.m[1]}" dy="0.36em">${p.n}</text>`;
+  mk.appendChild(g);
+});
+function renderLabels(){
+  const g=$('#labels'); g.innerHTML='';
+  LABELS.forEach(l=>{
+    const t=document.createElementNS(NS,'text');
+    t.setAttribute('class','lbl'); t.setAttribute('x',l.x); t.setAttribute('y',l.y); t.setAttribute('text-anchor',l.a);
+    const lines=[];
+    if(state.lang!=='ar') lines.push(['sv',l.sv]);
+    if(state.lang!=='sv') lines.push(['ar',l.ar]);
+    lines.forEach((ln,i)=>{
+      const s=document.createElementNS(NS,'tspan');
+      s.setAttribute('x',l.x); if(i>0) s.setAttribute('dy','15');
+      if(ln[0]==='ar'){s.setAttribute('class','arl'); s.setAttribute('lang','ar');}
+      s.textContent=ln[1]; t.appendChild(s);
+    });
+    g.appendChild(t);
+  });
+}
+
+/* particles */
+const particles=[];
+FLOWS.forEach(f=>{
+  const p=document.createElementNS(NS,'path'); p.setAttribute('d',f.d); $('#flowPaths').appendChild(p);
+  const len=p.getTotalLength(); const n=Math.round(len/24);
+  for(let i=0;i<n;i++){
+    const c=document.createElementNS(NS,'circle');
+    c.setAttribute('r','3.4'); c.setAttribute('class','particle '+f.c);
+    $('#particles').appendChild(c);
+    particles.push({el:c, path:p, len, off:i*(len/n)+Math.random()*8});
+  }
+});
+let flowT=0;
+function placeParticles(){
+  particles.forEach(pt=>{
+    const q=pt.path.getPointAtLength((pt.off+flowT)%pt.len);
+    pt.el.setAttribute('cx',q.x.toFixed(1)); pt.el.setAttribute('cy',q.y.toFixed(1));
+  });
+}
+
+/* tracer */
+const route=$('#route'), tracer=$('#tracer');
+let routeLen=0, tclock=0;
+function hex(c){return [1,3,5].map(i=>parseInt(c.slice(i,i+2),16))}
+function lerpColor(a,b,t){const A=hex(a),B=hex(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`}
+function setRoute(){
+  const s=STEPS[state.step];
+  route.setAttribute('d',s.d); routeLen=route.getTotalLength(); tclock=0; updateTracer();
+}
+function updateTracer(){
+  const s=STEPS[state.step];
+  let d=(tclock*110)%(routeLen+80); if(d>routeLen) d=routeLen;
+  const q=route.getPointAtLength(d);
+  tracer.setAttribute('cx',q.x); tracer.setAttribute('cy',q.y);
+  tracer.setAttribute('fill',lerpColor(s.c[0],s.c[1],routeLen?d/routeLen:0));
+}
+
+let last=performance.now(), clock=0;
+function frame(now){
+  const dt=Math.min(.05,(now-last)/1000); last=now;
+  if(!state.paused){
+    clock+=dt; tclock+=dt;
+    const ph=(clock%DUR)/DUR;
+    const pump=(ph>.2&&ph<.58)?Math.sin((ph-.2)/.38*Math.PI):0;
+    flowT+=dt*(34+100*pump);
+    placeParticles();
+    if(state.mode==='tour') updateTracer();
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- highlighting ---------- */
+function applyHighlights(){
+  document.querySelectorAll('[data-part]').forEach(el=>el.classList.remove('sel','hl'));
+  if(state.mode==='explore' && state.sel) document.querySelector(`[data-part="${state.sel}"]`).classList.add('sel');
+  if(state.mode==='tour') STEPS[state.step].hl.forEach(id=>document.querySelector(`[data-part="${id}"]`).classList.add('hl'));
+  document.querySelectorAll('.word').forEach(w=>w.setAttribute('aria-current', String(state.mode==='explore' && w.dataset.id===state.sel)));
+}
+function flash(id,cls){
+  const el=document.querySelector(`[data-part="${id}"]`);
+  el.classList.add(cls); setTimeout(()=>el.classList.remove(cls),1000);
+}
+
+/* ---------- panels ---------- */
+function renderPanel(){
+  if(state.mode==='explore') renderExplore();
+  else if(state.mode==='tour') renderTour();
+  else renderQuiz();
+  applyHighlights();
+}
+function renderExplore(){
+  const p=byId[state.sel];
+  if(!p){
+    panel.innerHTML=`<div class="empty"><div class="big-ico" aria-hidden="true">👆</div>
+      ${bi('Klicka på en del av hjärtat','اضغط على جزء من القلب','h2')}
+      ${bi('Du kan också välja ett ord i ordlistan längre ner. Siffrorna i bilden hör ihop med ordlistan.','يمكنك أيضاً اختيار كلمة من قائمة الكلمات في الأسفل. الأرقام في الصورة مرتبطة بقائمة الكلمات.','p','muted')}
+      <div><button class="btn primary" data-act="first">${btnLabel('Börja med del 1','ابدأ بالجزء 1')}</button></div></div>`;
+    return;
+  }
+  panel.innerHTML=`<div class="head"><span class="badge ${p.blood}">${p.n}</span>
+      <div class="names">${bi(p.sv,p.ar,'h2')}${(p.svAlt||p.arAlt)?bi(p.svAlt||'',p.arAlt||'','p','alt'):''}</div></div>
+    ${tagHTML(p.blood)}
+    <div class="texts">${bi(p.svT,p.arT,'p','txt')}</div>
+    <div class="row">
+      <button class="btn" data-act="prev">${btnLabel('Föregående','السابق','◀ ')}</button>
+      <span class="count">${p.n} / ${PARTS.length}</span>
+      <button class="btn primary" data-act="next">${btnLabel('Nästa','التالي','',' ▶')}</button>
+    </div>`;
+}
+function renderTour(){
+  const s=STEPS[state.step];
+  const dots=STEPS.map((_,i)=>`<button data-step="${i}" ${i===state.step?'aria-current="step"':''} aria-label="Steg ${i+1}">${i+1}</button>`).join('');
+  panel.innerHTML=`
+    <div class="steps" role="group" aria-label="Steg">${dots}</div>
+    ${tagHTML(LOOPS[s.loop], s.loop==='small'?'blue':(s.loop==='big'?'red':''))}
+    <div class="head"><span class="badge">${state.step+1}</span><div class="names">${bi(s.sv,s.ar,'h2')}</div></div>
+    <div class="texts">${bi(s.svT,s.arT,'p','txt')}</div>
+    <div class="row">
+      <button class="btn" data-act="tprev" ${state.step===0?'disabled':''}>${btnLabel('Föregående','السابق','◀ ')}</button>
+      <button class="btn" data-act="auto" aria-pressed="${state.auto}">${state.auto?btnLabel('Stoppa','أوقف','■ '):btnLabel('Spela automatiskt','تشغيل تلقائي','⟳ ')}</button>
+      <span class="count">${state.step+1} / ${STEPS.length}</span>
+      <button class="btn primary" data-act="tnext">${state.step===STEPS.length-1?btnLabel('Börja om','من البداية','↺ '):btnLabel('Nästa','التالي','',' ▶')}</button>
+    </div>`;
+}
+function renderQuiz(){
+  const q=state.quiz;
+  const term = state.qLang==='ar' ? `<div class="quiz-term" lang="ar" dir="rtl">${q.ar}</div>` : `<div class="quiz-term" lang="sv">${q.sv}</div>`;
+  let fb='';
+  if(state.feedback){
+    const f=state.feedback, p=f.p;
+    fb = f.ok
+      ? `<div class="fb ok">${bi(`Rätt! Det är <b>${p.sv}</b>.`,`صحيح! هذا هو <b>${p.ar}</b>.`,'p')}</div>`
+      : f.reveal
+        ? `<div class="fb bad">${bi(`Svaret är <b>${p.sv}</b> (nummer ${p.n}). Titta var den lyser!`,`الإجابة هي <b>${p.ar}</b> (رقم ${p.n}). انظر أين يضيء!`,'p')}</div>`
+        : `<div class="fb bad">${bi(`Inte riktigt – du klickade på <b>${p.sv}</b>. Försök igen!`,`ليس تماماً – لقد ضغطت على <b>${p.ar}</b>. حاول مرة أخرى!`,'p')}</div>`;
+  }
+  panel.innerHTML=`
+    ${bi('Hitta delen!','ابحث عن الجزء!','h2')}
+    ${bi('Klicka på den här delen i bilden:','اضغط على هذا الجزء في الصورة:','p','muted')}
+    ${term}
+    ${fb}
+    <div class="score">${bi(`Rätt på första försöket: ${state.score} av ${state.asked}`,`صحيح من المحاولة الأولى: ${state.score} من ${state.asked}`,'span')}</div>
+    <div class="row">
+      <button class="btn" data-act="reveal">${btnLabel('Visa svaret','أظهر الإجابة')}</button>
+      <button class="btn" data-act="qreset">${btnLabel('Nollställ','ابدأ من جديد','↺ ')}</button>
+      <span class="count"></span>
+      <button class="btn primary" data-act="qnext">${btnLabel('Ny fråga','سؤال جديد','',' ▶')}</button>
+    </div>`;
+}
+function newQuestion(){
+  let p; do{ p=PARTS[Math.floor(Math.random()*PARTS.length)]; } while(state.quiz && p.id===state.quiz.id);
+  state.quiz=p; state.qWrong=false; state.feedback=null; state.locked=false;
+  state.qLang = state.lang==='both' ? (Math.random()<.5?'sv':'ar') : state.lang;
+  renderPanel();
+}
+function answer(id){
+  if(state.locked) return;
+  const q=state.quiz;
+  if(id===q.id){
+    state.asked++; if(!state.qWrong) state.score++;
+    state.feedback={ok:true,p:q}; state.locked=true; flash(id,'ok'); renderPanel();
+    setTimeout(newQuestion,1900);
+  } else {
+    state.qWrong=true; state.feedback={ok:false,p:byId[id]}; flash(id,'bad'); renderPanel();
+  }
+}
+
+/* ---------- modes, language, play ---------- */
+function setMode(m){
+  state.mode=m;
+  document.querySelectorAll('#modes button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===m)));
+  svg.classList.toggle('touring',m==='tour');
+  svg.classList.toggle('quiz',m==='quiz');
+  $('#tour-layer').style.display = m==='tour' ? '' : 'none';
+  if(m!=='tour') stopAuto();
+  if(m==='tour') setRoute();
+  if(m==='quiz'){ newQuestion(); return; }
+  renderPanel();
+}
+function setLang(l){
+  state.lang=l;
+  document.body.className='lang-'+l;
+  document.documentElement.lang = l==='ar' ? 'ar' : 'sv';
+  document.querySelectorAll('#langs button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===l)));
+  if(state.mode==='quiz' && l!=='both') state.qLang=l;
+  renderLabels(); renderPanel(); renderPlay();
+}
+function renderPlay(){
+  $('#playBtn').innerHTML = state.paused ? btnLabel('Starta hjärtat','شغّل القلب','▶ ') : btnLabel('Pausa hjärtat','أوقف القلب','⏸ ');
+  $('#playBtn').setAttribute('aria-pressed',String(state.paused));
+}
+function setPaused(p){
+  state.paused=p; document.documentElement.classList.toggle('paused',p); renderPlay();
+}
+function goStep(i){ state.step=(i+STEPS.length)%STEPS.length; setRoute(); renderPanel(); }
+function stopAuto(){ state.auto=false; clearInterval(autoTimer); autoTimer=null; }
+function toggleAuto(){
+  if(state.auto){ stopAuto(); }
+  else { state.auto=true; autoTimer=setInterval(()=>goStep(state.step+1),8000); }
+  renderPanel();
+}
+function selectPart(id){
+  state.sel=id; renderPanel();
+  if(window.innerWidth<880) panel.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth', block:'start'});
+}
+
+/* ---------- events ---------- */
+function partFromEvent(e){ const el=e.target.closest('[data-part]'); return el?el.dataset.part:null; }
+function onPart(id){
+  if(!id) return;
+  if(state.mode==='quiz'){ answer(id); return; }
+  if(state.mode==='tour') setMode('explore');
+  state.sel=id; renderPanel();
+}
+svg.addEventListener('click',e=>onPart(partFromEvent(e)));
+svg.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ const id=partFromEvent(e); if(id){e.preventDefault(); onPart(id);} } });
+$('#modes').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) setMode(b.dataset.mode); });
+$('#langs').addEventListener('click',e=>{ const b=e.target.closest('button'); if(b) setLang(b.dataset.lang); });
+$('#playBtn').addEventListener('click',()=>setPaused(!state.paused));
+panel.addEventListener('click',e=>{
+  const st=e.target.closest('[data-step]'); if(st){ stopAuto(); goStep(+st.dataset.step); return; }
+  const b=e.target.closest('[data-act]'); if(!b) return;
+  const order=PARTS.map(p=>p.id), i=order.indexOf(state.sel);
+  switch(b.dataset.act){
+    case 'first': state.sel=order[0]; renderPanel(); break;
+    case 'prev': state.sel=order[(i-1+order.length)%order.length]; renderPanel(); break;
+    case 'next': state.sel=order[(i+1)%order.length]; renderPanel(); break;
+    case 'tprev': stopAuto(); goStep(state.step-1); break;
+    case 'tnext': goStep(state.step+1); break;
+    case 'auto': toggleAuto(); break;
+    case 'qnext': newQuestion(); break;
+    case 'reveal':
+      if(state.locked) break;
+      state.qWrong=true; state.feedback={ok:false,reveal:true,p:state.quiz}; renderPanel();
+      flash(state.quiz.id,'ok'); break;
+    case 'qreset': state.score=0; state.asked=0; newQuestion(); break;
+  }
+});
+document.addEventListener('keydown',e=>{
+  if(state.mode!=='tour' || e.target.closest('input,textarea')) return;
+  if(e.key==='ArrowRight'){ stopAuto(); goStep(state.step+1); }
+  if(e.key==='ArrowLeft'){ stopAuto(); goStep(state.step-1); }
+});
+
+/* word list */
+$('#words').innerHTML = PARTS.map(p=>`<button class="word" data-id="${p.id}"><span class="badge ${p.blood}">${p.n}</span><span class="w"><span class="sv">${p.sv}</span><span class="ar" lang="ar" dir="rtl">${p.ar}</span></span></button>`).join('');
+$('#words').addEventListener('click',e=>{
+  const b=e.target.closest('.word'); if(!b) return;
+  if(state.mode!=='explore') setMode('explore');
+  selectPart(b.dataset.id);
+});
+
+/* init */
+renderLabels();
+placeParticles();
+setPaused(matchMedia('(prefers-reduced-motion: reduce)').matches);
+renderPanel();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
